@@ -1,0 +1,193 @@
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import TextType from "../components/TextType";
+import CircularText from "../components/CircularText";
+import { ArrowRight, Mail, Download } from "lucide-react";
+import TargetCursor from "../components/TargetCursor";
+import MyExpertise from "../components/MyExpertise";
+import ProjectLayout from "../components/projectlayout";
+import Certifications from "../components/certifications";
+import Experience from "../components/Experience";
+import Contact from "../components/contact.jsx";
+
+export default function Home() {
+  const [avatarSrc, setAvatarSrc] = useState("/image.png");
+  const handleAvatarError = () => setAvatarSrc("/fallback.svg");
+
+  const tags = [
+    "Building Web Applications",
+    "Tech Enthusiast",
+    "Open Source Projects",
+    "Salesforce Developer",
+    "Investing Time in Tech",
+    "Web3 Enthusiast",
+  ];
+
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 text-gray-900 antialiased scroll-smooth selection:bg-purple-200 selection:text-purple-900">
+      {/* Normalize cross-browser rendering */}
+      <style jsx global>{`
+        html {
+          box-sizing: border-box;
+          -webkit-text-size-adjust: 100%;
+        }
+        *, *::before, *::after {
+          box-sizing: inherit;
+        }
+        img, picture, video, canvas, svg {
+          display: block;
+          max-width: 100%;
+        }
+        input, button, textarea, select {
+          font: inherit;
+        }
+        body {
+          margin: 0;
+          font-smooth: always;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+      `}</style>
+
+      {/* Hero Section */}
+      <section
+        id="top"
+        className="px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 lg:pb-16 flex items-center justify-center"
+      >
+        <div className="mx-auto w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          {/* Left Column */}
+          <div className="flex flex-col justify-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight">
+              Hi, I’m{" "}
+              <TextType
+                as="span"
+                text="Bassa Naga Jala Suryanarayana"
+                className="text-purple-600"
+                textColors={["#7C3AED"]}
+                typingSpeed={40}
+                deletingSpeed={30}
+                loop={false}
+                showCursor={false}
+              />
+            </h1>
+
+            <p className="mt-4 text-base sm:text-lg lg:text-xl text-gray-600 max-w-lg leading-relaxed">
+              A passionate software developer and tech enthusiast. I enjoy
+              building high-performance, scalable web applications and exploring
+              cutting-edge technologies.
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              {tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-full shadow-sm hover:bg-gray-200 transition"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+              <Link
+                href="#projects"
+                className="inline-flex items-center justify-center px-6 py-3 bg-purple-600 text-white text-base font-medium rounded-full shadow-md hover:bg-purple-700 transition"
+              >
+                View Projects
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                href="#contact"
+                className="inline-flex items-center justify-center px-6 py-3 bg-gray-100 text-gray-800 text-base font-medium rounded-full shadow-md hover:bg-gray-200 transition"
+              >
+                <Mail className="mr-2 h-5 w-5" />
+                Contact Me
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column */}
+          <div className="hidden md:flex justify-center">
+            <div className="flex flex-col items-center">
+              <div className="relative w-64 h-64 lg:w-72 lg:h-72">
+                <CircularText
+                  text={" ".repeat(6)}
+                  spinDuration={20}
+                  className="absolute inset-0 text-white"
+                />
+                <Image
+                  src={avatarSrc}
+                  alt="Profile photo"
+                  fill
+                  className="object-cover rounded-full border-4 border-purple-300 shadow-lg hover:shadow-xl transition"
+                  onError={handleAvatarError}
+                  priority
+                />
+              </div>
+
+              {/* Stats */}
+              <div className="mt-6 flex gap-4">
+                {[
+                  { value: "3+", label: "Years Experience", color: "text-purple-600" },
+                  { value: "20+", label: "Projects Completed", color: "text-pink-600" },
+                ].map((stat, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center bg-white px-6 py-4 rounded-xl shadow border border-gray-200 hover:border-purple-200 hover:shadow-lg transition"
+                  >
+                    <span className={`text-3xl font-bold ${stat.color}`}>
+                      {stat.value}
+                    </span>
+                    <span className="text-sm font-medium text-gray-600 mt-1">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Resume Button */}
+              <a
+                href="https://drive.google.com/file/d/1zPn_LlaukI98ax1kQ3Cta30f6xjawNXu/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-base font-medium shadow-md hover:from-purple-500 hover:to-indigo-500 transition"
+              >
+                Resume
+                <Download className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Other Sections */}
+      <MyExpertise />
+      <ProjectLayout />
+      <Experience />
+      <Certifications />
+      <Contact />
+
+      {/* Footer */}
+      <footer className="mt-20 py-8 text-center text-sm text-gray-600 border-t border-gray-200">
+        Made by <span className="font-semibold text-gray-900">B N J S Narayana</span> ©{" "}
+        {new Date().getFullYear()}
+      </footer>
+
+      {/* Custom Cursor */}
+      <TargetCursor
+        outerColor="#A78BFA"
+        innerColor="#A78BFA"
+        outerSize={40}
+        innerSize={8}
+        outerScale={3}
+        innerScale={0.7}
+        outerAlpha={0.4}
+        innerAlpha={0.7}
+        hideDefaultCursor={true}
+      />
+    </main>
+  );
+}
