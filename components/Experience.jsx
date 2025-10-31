@@ -1,9 +1,33 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, MapPin, CheckCircle2, ExternalLink, Briefcase } from 'lucide-react';
 
 const Experience = () => {
   const [expandedId, setExpandedId] = useState(null);
+  const [visibleCards, setVisibleCards] = useState(new Set());
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    const observers = cardRefs.current.map((ref, index) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setVisibleCards((prev) => new Set([...prev, index]));
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -150px 0px' }
+      );
+
+      if (ref) observer.observe(ref);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, []);
 
   const experiences = [
     {
@@ -72,15 +96,15 @@ const Experience = () => {
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="relative px-3 sm:px-4 md:px-6 lg:px-8 scroll-mt-20 sm:scroll-mt-24 md:scroll-mt-28 py-12 sm:py-14 md:py-16 lg:py-24"
+      className="relative px-3 sm:px-4 md:px-6 lg:px-8 scroll-mt-20 sm:scroll-mt-24 md:scroll-mt-28 py-6 sm:py-8 md:py-10 lg:py-12"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-50/30 to-transparent pointer-events-none"></div>
 
       <div className="relative z-10">
         {/* Heading */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-24">
-          <div className="inline-flex items-center gap-2 mb-3 sm:mb-4 md:mb-5 px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-100 rounded-full">
+        <div className="text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+          <div className="inline-flex items-center gap-2 mb-2 sm:mb-3 md:mb-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-100 rounded-full">
             <Briefcase size={16} className="text-purple-600 flex-shrink-0" />
             <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-purple-700 uppercase tracking-wider">Career Journey</span>
           </div>
@@ -94,77 +118,110 @@ const Experience = () => {
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto">
-          {/* Desktop Timeline (Two-column) */}
-          <div className="hidden md:grid md:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 relative pb-8">
-            <div className="absolute left-1/2 top-0 bottom-0 w-1 md:w-1.5 bg-gradient-to-b from-purple-400 via-pink-400 to-orange-400 transform -translate-x-1/2 shadow-lg"></div>
-
-            {experiences.map((exp, index) => (
-              <div
-                key={exp.id}
-                className={`relative pt-4 sm:pt-6 md:pt-8 group ${
-                  index % 2 === 0 ? "md:pr-6 lg:pr-12 xl:pr-16 md:text-right" : "md:pl-6 lg:pl-12 xl:pl-16 md:text-left"
-                }`}
-              >
-                {/* Dot */}
+        <div className="max-w-6xl mx-auto">
+          {/* Desktop Animated Timeline */}
+          <div className="hidden md:block relative py-8">
+            {/* Vertical Progress Line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-400 via-pink-400 to-orange-400 opacity-50"></div>
+            
+            <div className="space-y-16">
+              {experiences.map((exp, index) => (
                 <div
-                  className={`absolute ${
-                    index % 2 === 0 ? "md:-right-[30px] lg:-right-[35px]" : "md:-left-[30px] lg:-left-[35px]"
-                  } top-6 md:top-8 w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-gradient-to-br ${exp.color} shadow-lg flex items-center justify-center text-white z-20 group-hover:scale-110 group-hover:shadow-2xl transition-all duration-300 flex-shrink-0`}
+                  key={exp.id}
+                  ref={(el) => (cardRefs.current[index] = el)}
+                  className={`relative transition-all duration-1000 ease-out ${
+                    visibleCards.has(index)
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-24'
+                  }`}
+                  style={{ transitionDelay: `${index * 150}ms` }}
                 >
-                  <span className="text-lg md:text-xl lg:text-2xl">{exp.icon}</span>
-                </div>
-
-                {/* Card */}
-                <div className="bg-white/90 backdrop-blur-md rounded-lg md:rounded-xl lg:rounded-2xl border border-gray-200/80 hover:border-purple-300/80 shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-5 lg:p-6 xl:p-8 group hover:translate-y-[-4px]">
-                  <span className={`inline-block px-2.5 md:px-3 py-1 md:py-1.5 text-xs md:text-sm font-bold rounded-full bg-gradient-to-r ${exp.color} text-white mb-2 md:mb-4`}>
-                    {exp.type}
-                  </span>
-
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-0.5 md:mb-1 leading-tight group-hover:text-purple-600 transition-colors">
-                    {exp.title}
-                  </h3>
-
-                  <p className="text-base md:text-lg lg:text-lg text-transparent bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text font-semibold mb-3 md:mb-4">
-                    {exp.company}
-                  </p>
-
-                  <div className="flex flex-col gap-2 md:gap-2.5 mb-4 md:mb-5 text-xs md:text-sm text-gray-600">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <Calendar size={16} className="text-purple-500 flex-shrink-0" />
-                      <span className="font-medium">{exp.duration}</span>
+                  {/* Alternating Layout */}
+                  <div className={`flex items-start gap-8 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                    {/* Icon Badge */}
+                    <div className="flex-shrink-0 relative">
+                      {/* Glow Effect */}
+                      <div className={`absolute inset-0 w-20 h-20 rounded-2xl bg-gradient-to-br ${exp.color} opacity-30 blur-lg`}></div>
+                      
+                      {/* Icon Container */}
+                      <div className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${exp.color} shadow-lg flex items-center justify-center text-white transform transition-all duration-700 ${
+                        visibleCards.has(index) ? 'scale-100 rotate-0' : 'scale-0 rotate-90'
+                      } hover:scale-110 hover:-rotate-6 cursor-pointer`}
+                        style={{ transitionDelay: `${index * 150 + 100}ms` }}
+                      >
+                        <span className="text-3xl">{exp.icon}</span>
+                      </div>
+                      
+                      {/* Connecting Line Dot */}
+                      <div className={`absolute top-1/2 ${index % 2 === 0 ? 'right-0' : 'left-0'} transform ${index % 2 === 0 ? 'translate-x-1/2' : '-translate-x-1/2'} -translate-y-1/2 w-3 h-3 bg-purple-500 rounded-full border-2 border-white transition-all duration-500 shadow-md`}
+                        style={{ transitionDelay: `${index * 150 + 300}ms` }}
+                      ></div>
                     </div>
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <MapPin size={16} className="text-pink-500 flex-shrink-0" />
-                      <span className="font-medium">{exp.location}</span>
+
+                    {/* Content Card */}
+                    <div className={`flex-1 max-w-xl bg-white rounded-2xl border border-gray-200 hover:border-purple-300 shadow-md hover:shadow-xl transition-all duration-700 overflow-hidden group ${
+                      visibleCards.has(index) ? 'translate-x-0' : index % 2 === 0 ? '-translate-x-16' : 'translate-x-16'
+                    } hover:-translate-y-1`}
+                      style={{ transitionDelay: `${index * 150 + 200}ms` }}
+                    >
+                      {/* Compact Header */}
+                      <div className={`bg-gradient-to-r ${exp.color} p-5 text-white relative overflow-hidden`}>
+                        {/* Shimmer */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex justify-between items-start mb-3">
+                            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-lg text-xs font-bold">
+                              {exp.type}
+                            </span>
+                            <div className="flex items-center gap-2 text-xs bg-white/15 px-3 py-1 rounded-lg backdrop-blur-sm">
+                              <Calendar size={14} />
+                              <span>{exp.duration}</span>
+                            </div>
+                          </div>
+                          
+                          <h3 className="text-2xl font-bold mb-1">{exp.title}</h3>
+                          <p className="text-sm font-semibold opacity-90 mb-2">{exp.company}</p>
+                          <div className="flex items-center gap-1.5 text-xs opacity-85">
+                            <MapPin size={12} />
+                            <span>{exp.location}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Compact Body */}
+                      <div className="p-5">
+                        <ul className="space-y-2.5 mb-5">
+                          {exp.description.map((point, idx) => (
+                            <li key={idx} className="flex gap-2.5 text-gray-700 text-sm group/item transition-all duration-300 hover:translate-x-1">
+                              <CheckCircle2 size={16} className="text-purple-500 flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform" />
+                              <span className="leading-relaxed">{point}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        {/* Compact Skills */}
+                        <div className="pt-4 border-t border-gray-200">
+                          <div className="flex flex-wrap gap-2">
+                            {exp.skills.map((skill, idx) => (
+                              <span
+                                key={idx}
+                                className="px-3 py-1.5 bg-gray-50 text-gray-700 text-xs font-medium rounded-lg border border-gray-200 hover:border-purple-400 hover:bg-purple-50 hover:text-purple-700 transition-all duration-300 hover:scale-105 cursor-pointer"
+                                style={{ 
+                                  animation: visibleCards.has(index) ? `fadeInUp 0.4s ease-out ${idx * 40 + 500}ms both` : 'none'
+                                }}
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  <ul className="space-y-2 md:space-y-3 mb-4 md:mb-5">
-                    {exp.description.map((point, idx) => (
-                      <li key={idx} className="flex gap-2 md:gap-3 text-xs md:text-sm text-gray-700 leading-relaxed">
-                        <CheckCircle2 size={16} className="text-purple-500 flex-shrink-0 mt-0.5" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="pt-3 md:pt-4 border-t border-gray-100">
-                    <p className="text-[10px] md:text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2 md:mb-3">Skills</p>
-                    <div className="flex flex-wrap gap-1.5 md:gap-2">
-                      {exp.skills.map((skill, idx) => (
-                        <span
-                          key={idx}
-                          className="px-2.5 md:px-3 py-0.5 md:py-1 bg-gray-100 text-gray-700 text-[10px] md:text-xs font-medium rounded-full hover:bg-purple-100 hover:text-purple-700 transition-all"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Mobile Timeline (Vertical) */}
@@ -246,7 +303,7 @@ const Experience = () => {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 sm:mt-14 md:mt-16 lg:mt-20 xl:mt-24 text-center px-3">
+        <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-14 text-center px-3">
           <div className="inline-flex flex-col items-center gap-3 sm:gap-4">
             <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg font-medium max-w-xl px-2">
               Interested in collaborating or learning more about my work?
@@ -267,6 +324,8 @@ const Experience = () => {
               </a>
             </div>
           </div>
+          
+
         </div>
       </div>
     </section>

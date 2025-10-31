@@ -53,7 +53,7 @@ const Contact = () => {
   }
 
   return (
-    <section id="contact" className="px-3 sm:px-4 md:px-6 lg:px-8 py-12 sm:py-14 md:py-16 lg:py-20 scroll-mt-20">
+    <section id="contact" className="px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 lg:py-12 scroll-mt-20">
       <div className="mx-auto max-w-5xl">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 items-start">
           {/* Contact info */}

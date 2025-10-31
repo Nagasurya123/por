@@ -120,10 +120,10 @@ const certifications = () => {
   };
 
   return (
-    <section id="certifications" className="px-3 sm:px-4 md:px-6 lg:px-8 py-12 sm:py-14 md:py-16 lg:py-20 scroll-mt-20 bg-gradient-to-b from-gray-50 to-white">
-      <div className="mx-auto w-full max-w-6xl">
-        {/* Header */}
-        <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-16 text-center">
+        <section id="certifications" className="px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 lg:py-12 scroll-mt-20 bg-gradient-to-b from-gray-50 to-white">
+      {/* Container */}
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-6 sm:mb-8 md:mb-10 lg:mb-12 text-center">
           <div className="flex items-center justify-center gap-2 mb-2 sm:mb-3 md:mb-4">
             <Award className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-purple-600" />
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">
@@ -196,7 +196,7 @@ const certifications = () => {
         </div>
 
         {/* Footer CTA */}
-        <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-16 text-center">
+        <div className="mt-6 sm:mt-8 md:mt-10 lg:mt-12 text-center">
           <p className="text-xs sm:text-sm md:text-base text-gray-600 mb-2 sm:mb-3 md:mb-4">
             Want to see more? Check out my <a href="#" className="text-purple-600 font-semibold hover:underline active:text-purple-700 transition">full profile</a>
           </p>

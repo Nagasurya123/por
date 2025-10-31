@@ -89,9 +89,9 @@ export default function MyExpertise() {
     <section
       id="expertise"
       ref={sectionRef}
-      className="relative mt-6 sm:mt-8 lg:mt-12 mb-8 sm:mb-12 lg:mb-16 rounded-2xl sm:rounded-3xl overflow-hidden"
+      className="relative mt-4 sm:mt-6 lg:mt-8 mb-6 sm:mb-8 lg:mb-10 rounded-2xl sm:rounded-3xl overflow-hidden"
     >
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center">
           {/* === Illustration column (connected S-map) === */}
           <div className="relative flex justify-center order-2 md:order-1">
@@ -190,7 +190,7 @@ export default function MyExpertise() {
 
           {/* === Content column === */}
           <div className="order-1 md:order-2">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-black mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-black mb-4 sm:mb-6">
               My <span className="text-black">Expertise</span>
             </h2>
 

@@ -39,6 +39,8 @@ const ProjectLayout = () => {
 
   const swapRef = useRef(null);
   const [active, setActive] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const sectionRef = useRef(null);
   const [cardDimensions, setCardDimensions] = useState({
     width: 650,
     height: 480,
@@ -98,20 +100,55 @@ const ProjectLayout = () => {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
+  // One-time animation on scroll into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
   return (
-    <section id="projects" aria-labelledby="projects-heading" className="px-4 sm:px-6 lg:px-8 scroll-mt-20 sm:scroll-mt-28 py-8 sm:py-12 lg:py-16">
+    <section 
+      ref={sectionRef}
+      id="projects" 
+      aria-labelledby="projects-heading" 
+      className="px-4 sm:px-6 lg:px-8 scroll-mt-20 sm:scroll-mt-28 py-6 sm:py-8 lg:py-10"
+    >
       {/* Heading Section */}
-      <div className="text-center mb-12 sm:mb-16">
-        <h1 id="projects-heading" className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight mb-2 sm:mb-3">
-          My <span className="text-blue-400">Projects</span>
+      <div className={`text-center mb-8 sm:mb-10 transition-all duration-1000 ${hasAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+        
+        <h1 id="projects-heading" className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 tracking-tight mb-4 sm:mb-5">
+          My <span className="relative inline-block">
+            <span className="text-blue-600">Projects</span>
+            <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 8 Q50 2, 100 8 T200 8" stroke="currentColor" strokeWidth="3" fill="none" className="text-blue-400" strokeLinecap="round"/>
+            </svg>
+          </span>
         </h1>
-        <p className="text-gray-500 text-base sm:text-lg">
-          Explore my latest work — crafted with creativity, logic, and code.
+        <p className="text-gray-600 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+          Explore my latest work — crafted with <span className="font-semibold text-gray-800">creativity</span>, <span className="font-semibold text-gray-800">logic</span>, and <span className="font-semibold text-gray-800">code</span>.
         </p>
       </div>
 
       {/* Two-column layout */}
-      <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-start lg:items-center">
+      <div className={`mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-start lg:items-center transition-all duration-1000 delay-300 ${hasAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         {/* Left: Details panel */}
         <div className="order-2 md:order-1 w-full">
           <div className="rounded-xl sm:rounded-2xl border border-gray-200 bg-white/70 backdrop-blur p-4 sm:p-6 lg:p-8 shadow-sm hover:shadow-md transition duration-200">

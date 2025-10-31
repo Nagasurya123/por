@@ -1,16 +1,18 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import TextType from "../components/TextType";
 import CircularText from "../components/CircularText";
 import { ArrowRight, Mail, Download } from "lucide-react";
-import TargetCursor from "../components/TargetCursor";
-import MyExpertise from "../components/MyExpertise";
-import ProjectLayout from "../components/projectlayout";
-import Certifications from "../components/certifications";
-import Experience from "../components/Experience";
-import Contact from "../components/contact.jsx";
+
+// Lazy load components that are below the fold
+const TargetCursor = lazy(() => import("../components/TargetCursor"));
+const MyExpertise = lazy(() => import("../components/MyExpertise"));
+const ProjectLayout = lazy(() => import("../components/projectlayout"));
+const Certifications = lazy(() => import("../components/certifications"));
+const Experience = lazy(() => import("../components/Experience"));
+const Contact = lazy(() => import("../components/contact.jsx"));
 
 export default function Home() {
   const [avatarSrc, setAvatarSrc] = useState("/image.png");
@@ -25,36 +27,19 @@ export default function Home() {
     "Web3 Enthusiast",
   ];
 
+  // Loading fallback component
+  const LoadingFallback = () => (
+    <div className="w-full py-12 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+    </div>
+  );
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 text-gray-900 antialiased scroll-smooth selection:bg-purple-200 selection:text-purple-900">
-      {/* Normalize cross-browser rendering */}
-      <style jsx global>{`
-        html {
-          box-sizing: border-box;
-          -webkit-text-size-adjust: 100%;
-        }
-        *, *::before, *::after {
-          box-sizing: inherit;
-        }
-        img, picture, video, canvas, svg {
-          display: block;
-          max-width: 100%;
-        }
-        input, button, textarea, select {
-          font: inherit;
-        }
-        body {
-          margin: 0;
-          font-smooth: always;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-      `}</style>
-
       {/* Hero Section */}
       <section
         id="top"
-        className="px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 lg:pb-16 flex items-center justify-center"
+        className="px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-6 sm:pb-8 lg:pb-10 flex items-center justify-center"
       >
         <div className="mx-auto w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left Column */}
@@ -122,9 +107,11 @@ export default function Home() {
                   src={avatarSrc}
                   alt="Profile photo"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 288px, 320px"
                   className="object-cover rounded-full border-4 border-purple-300 shadow-lg hover:shadow-xl transition"
                   onError={handleAvatarError}
                   priority
+                  quality={85}
                 />
               </div>
 
@@ -163,31 +150,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Other Sections */}
-      <MyExpertise />
-      <ProjectLayout />
-      <Experience />
-      <Certifications />
-      <Contact />
+      {/* Other Sections - Lazy Loaded */}
+      <Suspense fallback={<LoadingFallback />}>
+        <MyExpertise />
+      </Suspense>
+      
+      <Suspense fallback={<LoadingFallback />}>
+        <ProjectLayout />
+      </Suspense>
+      
+      <Suspense fallback={<LoadingFallback />}>
+        <Experience />
+      </Suspense>
+      
+      <Suspense fallback={<LoadingFallback />}>
+        <Certifications />
+      </Suspense>
+      
+      <Suspense fallback={<LoadingFallback />}>
+        <Contact />
+      </Suspense>
 
       {/* Footer */}
-      <footer className="mt-20 py-8 text-center text-sm text-gray-600 border-t border-gray-200">
+      <footer className="mt-8 py-6 text-center text-sm text-gray-600 border-t border-gray-200">
         Made by <span className="font-semibold text-gray-900">B N J S Narayana</span> ©{" "}
         {new Date().getFullYear()}
       </footer>
 
-      {/* Custom Cursor */}
-      <TargetCursor
-        outerColor="#A78BFA"
-        innerColor="#A78BFA"
-        outerSize={40}
-        innerSize={8}
-        outerScale={3}
-        innerScale={0.7}
-        outerAlpha={0.4}
-        innerAlpha={0.7}
-        hideDefaultCursor={true}
-      />
+      {/* Custom Cursor - Lazy Loaded */}
+      <Suspense fallback={null}>
+        <TargetCursor
+          outerColor="#A78BFA"
+          innerColor="#A78BFA"
+          outerSize={40}
+          innerSize={8}
+          outerScale={3}
+          innerScale={0.7}
+          outerAlpha={0.4}
+          innerAlpha={0.7}
+          hideDefaultCursor={true}
+        />
+      </Suspense>
     </main>
   );
 }

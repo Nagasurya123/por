@@ -7,8 +7,7 @@ export const ScrollStackItem = ({ children, itemClassName = '' }) => (
     style={{
       backfaceVisibility: 'hidden',
       transformStyle: 'preserve-3d'
-    }}
-  >
+    }}>
     {children}
   </div>
 );
@@ -66,17 +65,14 @@ const ScrollStack = ({
     }
   }, [useWindowScroll]);
 
-  const getElementOffset = useCallback(
-    element => {
-      if (useWindowScroll) {
-        const rect = element.getBoundingClientRect();
-        return rect.top + window.scrollY;
-      } else {
-        return element.offsetTop;
-      }
-    },
-    [useWindowScroll]
-  );
+  const getElementOffset = useCallback(element => {
+    if (useWindowScroll) {
+      const rect = element.getBoundingClientRect();
+      return rect.top + window.scrollY;
+    } else {
+      return element.offsetTop;
+    }
+  }, [useWindowScroll]);
 
   const updateCardTransforms = useCallback(() => {
     if (!cardsRef.current.length || isUpdatingRef.current) return;
@@ -249,11 +245,9 @@ const ScrollStack = ({
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
-    const cards = Array.from(
-      useWindowScroll
-        ? document.querySelectorAll('.scroll-stack-card')
-        : scroller.querySelectorAll('.scroll-stack-card')
-    );
+    const cards = Array.from(useWindowScroll
+      ? document.querySelectorAll('.scroll-stack-card')
+      : scroller.querySelectorAll('.scroll-stack-card'));
 
     cardsRef.current = cards;
     const transformsCache = lastTransformsRef.current;
@@ -316,8 +310,7 @@ const ScrollStack = ({
         // Container scroll mode - original behavior
         overscrollBehavior: 'contain',
         WebkitOverflowScrolling: 'touch',
-        // Disable smooth scrolling
-        scrollBehavior: 'auto',
+        scrollBehavior: 'smooth',
         WebkitTransform: 'translateZ(0)',
         transform: 'translateZ(0)',
         willChange: 'scroll-position'
