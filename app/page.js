@@ -36,7 +36,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 text-gray-900 antialiased scroll-smooth selection:bg-purple-200 selection:text-purple-900">
-      {/* Hero Section */}
       <section
         id="top"
         className="px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-6 sm:pb-8 lg:pb-10 flex items-center justify-center"
