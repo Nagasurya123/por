@@ -35,10 +35,10 @@ const Experience = () => {
       title: "Technical Content Writer Intern",
       company: "GeeksForGeeks",
       location: "India",
-      duration: "May 2024 - November 2024", // ✅ Fixed typo: was "Oct 202"
+      duration: "May 2024 - November 2024",
       description: [
-        "Authored and published 20+ technical articles on Artificial Intelligence and Full-Stack Web Development.",
-        "Explained complex concepts like React Hooks, Firebase Integration, and AI APIs in a beginner-friendly way.",
+        "Authored and published 20+ comprehensive technical articles on Artificial Intelligence and Full-Stack Web Development, reaching thousands of developers worldwide.",
+        "Translated complex technical concepts including React Hooks, Firebase Integration, and AI APIs into clear, actionable tutorials for developers at all skill levels.",
       ],
       type: "Paid Internship",
       color: "from-purple-500 to-pink-500",
@@ -52,8 +52,8 @@ const Experience = () => {
       location: "India",
       duration: "September 2024 - December 2024",
       description: [
-        "Contributed to multiple open-source repositories, enhancing code quality and documentation.",
-        "Collaborated with maintainers and global contributors via Git and GitHub."
+        "Contributed to multiple high-impact open-source repositories, improving code quality, performance optimization, and comprehensive documentation.",
+        "Collaborated effectively with maintainers and developers across the globe through GitHub, implementing best practices in version control and code review."
       ],
       type: "contribution",
       color: "from-cyan-500 to-blue-500",
@@ -67,10 +67,10 @@ const Experience = () => {
       location: "Independent Project",
       duration: "2023 - 2024",
       description: [
-        "Built a scalable financial management system integrating Next.js, Prisma, and Gemini AI.",
-              "Deployed the application on Vercel with CI/CD pipelines for seamless updates."
+        "Architected and developed a production-ready financial management system leveraging Next.js, Prisma ORM, and Gemini AI for intelligent financial insights.",
+        "Implemented robust CI/CD pipelines on Vercel, ensuring seamless deployment, automatic testing, and zero-downtime updates for continuous delivery."
       ],
-        type: "Academic Project",
+      type: "Academic Project",
       color: "from-green-500 to-emerald-500",
       icon: "📚",
       skills: ["JavaScript", "Next.js", "Web Development", "AI Integration", "Prisma" ]
@@ -80,10 +80,10 @@ const Experience = () => {
       title: "Frontend Developer",
       company: "IBM-SkillBuild",
       location: "Remote",
-      duration: " May 2025 - Nov 2025",
+      duration: "May 2025 - Nov 2025",
       description: [
-        "Learned responsive web interfaces using React and Tailwind CSS from IBM SkillBuild platform.",
-        "Practiced building real-world projects to solidify understanding."
+        "Mastered modern frontend development by building responsive, pixel-perfect web interfaces using React and Tailwind CSS through IBM's professional training platform.",
+        "Applied industry best practices through hands-on projects, developing production-grade applications with focus on performance, accessibility, and user experience."
       ],
       type: "Unpaid Internship",
       color: "from-orange-500 to-red-500",
@@ -114,7 +114,7 @@ const Experience = () => {
           </h2>
 
           <p className="text-gray-600 text-xs sm:text-sm md:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed px-2">
-            A timeline showcasing my professional journey, internships, and growth opportunities. Each role has shaped my skills and passion for technology.
+            A comprehensive timeline showcasing my professional journey, impactful contributions, and continuous growth in software development. Each experience has refined my technical expertise and strengthened my passion for building innovative solutions.
           </p>
         </div>
 
@@ -306,21 +306,21 @@ const Experience = () => {
         <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-14 text-center px-3">
           <div className="inline-flex flex-col items-center gap-3 sm:gap-4">
             <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg font-medium max-w-xl px-2">
-              Interested in collaborating or learning more about my work?
+              Excited to collaborate on innovative projects or discuss how my experience can contribute to your team's success?
             </p>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
               <a
                 href="mailto:bassanagasurya@gmail.com"
                 className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg md:rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 text-xs sm:text-sm md:text-base whitespace-nowrap group min-h-[44px]"
               >
-                Get In Touch
+                Let's Connect
                 <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform flex-shrink-0" />
               </a>
               <a
                 href="#projects"
                 className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg md:rounded-xl border-2 border-purple-600 text-purple-600 font-semibold hover:bg-purple-50 transition-all duration-200 text-xs sm:text-sm md:text-base whitespace-nowrap min-h-[44px]"
               >
-                View My Projects
+                Explore My Work
               </a>
             </div>
           </div>

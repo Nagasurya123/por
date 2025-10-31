@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useMemo } from 'react';
+import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { gsap } from 'gsap';
 
 const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hideDefaultCursor = true }) => {
+  const [isMounted, setIsMounted] = useState(false);
   const cursorRef = useRef(null);
   const cornersRef = useRef(null);
   const spinTl = useRef(null);
@@ -13,6 +14,11 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
     cornerSize: 12,
     parallaxStrength: 0.00005
   }), []);
+
+  // Only render on client side
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const moveCursor = useCallback((x, y) => {
     if (!cursorRef.current) return;
@@ -25,7 +31,7 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
   }, []);
 
   useEffect(() => {
-    if (!cursorRef.current) return;
+    if (!cursorRef.current || !isMounted) return;
 
     const originalCursor = document.body.style.cursor;
     if (hideDefaultCursor) {
@@ -296,7 +302,7 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       spinTl.current?.kill();
       document.body.style.cursor = originalCursor;
     };
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor]);
+  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isMounted]);
 
   useEffect(() => {
     if (!cursorRef.current || !spinTl.current) return;
@@ -311,6 +317,11 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       );
     }
   }, [spinDuration]);
+
+  // Don't render anything on server side
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div

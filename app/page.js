@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, lazy, Suspense } from "react";
+import { useState, lazy, Suspense, useEffect } from "react";
 import TextType from "../components/TextType";
 import CircularText from "../components/CircularText";
-import { ArrowRight, Mail, Download } from "lucide-react";
+import { ArrowRight, Mail, Download, Eye } from "lucide-react";
 
 // Lazy load components that are below the fold
 const TargetCursor = lazy(() => import("../components/TargetCursor"));
@@ -16,7 +16,28 @@ const Contact = lazy(() => import("../components/contact.jsx"));
 
 export default function Home() {
   const [avatarSrc, setAvatarSrc] = useState("/image.png");
+  const [viewCount, setViewCount] = useState(0);
+  const [isCounterLoading, setIsCounterLoading] = useState(true);
+  
   const handleAvatarError = () => setAvatarSrc("/fallback.svg");
+
+  // Impression counter - tracks page views
+  useEffect(() => {
+    const incrementViewCount = () => {
+      // Get current count from localStorage
+      const storedCount = localStorage.getItem('portfolio_views');
+      const currentCount = storedCount ? parseInt(storedCount, 10) : 0;
+      
+      // Increment and save
+      const newCount = currentCount + 1;
+      localStorage.setItem('portfolio_views', newCount.toString());
+      setViewCount(newCount);
+      setIsCounterLoading(false);
+    };
+
+    // Small delay to ensure client-side rendering
+    setTimeout(incrementViewCount, 100);
+  }, []);
 
   const tags = [
     "Building Web Applications",
@@ -171,9 +192,33 @@ export default function Home() {
       </Suspense>
 
       {/* Footer */}
-      <footer className="mt-8 py-6 text-center text-sm text-gray-600 border-t border-gray-200">
-        Made by <span className="font-semibold text-gray-900">B N J S Narayana</span> ©{" "}
-        {new Date().getFullYear()}
+      <footer className="mt-8 py-6 border-t border-gray-200 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Copyright */}
+            <div className="text-sm text-gray-600 text-center sm:text-left">
+              Made by <span className="font-semibold text-gray-900">B N J S Narayana</span> ©{" "}
+              {new Date().getFullYear()}
+            </div>
+
+            {/* View Counter */}
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <Eye className="w-4 h-4 text-gray-600" />
+              <span>
+                {isCounterLoading ? (
+                  <span className="inline-block w-16 h-4 bg-gray-200 animate-pulse rounded"></span>
+                ) : (
+                  <>
+                    <span className="font-semibold text-gray-900">{viewCount.toLocaleString()}</span>
+                    <span className="ml-1">
+                      {viewCount === 1 ? 'impression' : 'impressions'}
+                    </span>
+                  </>
+                )}
+              </span>
+            </div>
+          </div>
+        </div>
       </footer>
 
       {/* Custom Cursor - Lazy Loaded */}

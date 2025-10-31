@@ -187,7 +187,7 @@ export default function Navbar() {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-2 lg:gap-3 px-3 lg:px-4 py-2 lg:py-3 rounded-lg text-sm lg:text-base transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-600
+                  className={`cursor-target flex items-center gap-2 lg:gap-3 px-3 lg:px-4 py-2 lg:py-3 rounded-lg text-sm lg:text-base transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-600
                     ${isActive ? "bg-purple-600 text-white font-semibold shadow-md" : "text-gray-800 hover:bg-gray-100 active:bg-gray-200"}`}
                   aria-label={`Navigate to ${item.name}`}
                   aria-current={isActive ? "page" : undefined}
@@ -220,7 +220,7 @@ export default function Navbar() {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className={`flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-xs transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 min-h-[44px] min-w-[44px]
+                  className={`cursor-target flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-xs transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 min-h-[44px] min-w-[44px]
                     ${isActive ? "bg-purple-600 text-white font-semibold shadow-md" : "text-gray-700 hover:bg-gray-100 active:bg-gray-200"}`}
                   aria-label={`Navigate to ${item.name}`}
                   aria-current={isActive ? "page" : undefined}
@@ -249,7 +249,7 @@ export default function Navbar() {
         <button
           ref={toggleBtnRef}
           onClick={toggleMenu}
-          className="p-2 sm:p-2.5 rounded-lg bg-purple-600 text-white shadow-md hover:bg-purple-700 active:bg-purple-800 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-600 min-h-[44px] min-w-[44px] flex items-center justify-center"
+          className="cursor-target p-2 sm:p-2.5 rounded-lg bg-purple-600 text-white shadow-md hover:bg-purple-700 active:bg-purple-800 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-600 min-h-[44px] min-w-[44px] flex items-center justify-center"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
@@ -272,7 +272,7 @@ export default function Navbar() {
                 <li key={item.name} style={{ animationDelay: `${index * 0.05}s` }} className="animate-fade-in-up">
                   <Link
                     href={item.href}
-                    className={`group flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 min-h-[44px] text-sm sm:text-base
+                    className={`cursor-target group flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 min-h-[44px] text-sm sm:text-base
                       ${isActive ? "bg-purple-600 text-white font-semibold shadow-md" : "text-gray-800 hover:bg-gray-100 active:bg-gray-200"}`}
                     aria-label={`Navigate to ${item.name}`}
                     aria-current={isActive ? "page" : undefined}
